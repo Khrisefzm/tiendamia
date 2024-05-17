@@ -1,7 +1,20 @@
+function logIn() {
+  let isOnline = JSON.parse(localStorage.getItem("isOnline"));
+  if (!isOnline) {
+    localStorage.setItem("isOnline", JSON.stringify(true));
+  } else {
+    localStorage.setItem("isOnline", JSON.stringify(false));
+  }
+  printHeader();
+}
 function printHeader() {
   const cart = JSON.parse(localStorage.getItem("cart"));
   const numberOfProduct = !cart ? 0 : cart.length;
-  const show = !cart || numberOfProduct == 0 ? "none" : "";
+  const showCartNumber = !cart || numberOfProduct == 0 ? "none" : "";
+
+  const isOnline = JSON.parse(localStorage.getItem("isOnline"));
+  const profile = !isOnline ? "./assets/user.png" : "./assets/user-check.png";
+
   const headerTemplate = `
   <div class="search">
     <div class="logo">
@@ -16,22 +29,6 @@ function printHeader() {
     </div>
     <div class="social">
       <ul>
-        <li>
-          <img
-            src="./assets/facebook.png"
-            width="30"
-            height="30"
-            alt="facebook"
-          />
-        </li>
-        <li>
-          <img
-            src="./assets/instagram.png"
-            width="30"
-            height="30"
-            alt="instagram"
-          />
-        </li>
         <li>
           <a href="./favorites.html">
             <i
@@ -48,8 +45,17 @@ function printHeader() {
               height="30"
               alt="shopping-cart"
             />
-            <div class="cart-number-container" style="display: ${show}">${numberOfProduct}</div>
+            <div class="cart-number-container" style="display: ${showCartNumber}">${numberOfProduct}</div>
           </a>
+        </li>
+        <li>
+          <img onclick=logIn()
+            src=${profile}
+            width="30"
+            height="30"
+            alt="profile"
+            style="cursor: pointer"
+          />
         </li>
       </ul>
     </div>
