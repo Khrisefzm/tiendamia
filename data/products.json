@@ -1,0 +1,68 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "title": "Mackbook Pro 15'4",
+      "colors": ["space-gray", "blue"],
+      "price": 1000,
+      "stock": 20,
+      "images": [
+        "assets/products/macbook15.png",
+        "assets/mock1.jpg",
+        "assets/mock2.jpg"
+      ],
+      "onsale": "50% off",
+      "supplier": "sup1"
+    },
+    {
+      "id": 2,
+      "title": "Microphone",
+      "colors": ["black", "white"],
+      "price": 150,
+      "stock": 15,
+      "images": ["assets/products/microphone.png"],
+      "onsale": "30% off",
+      "supplier": "sup2"
+    },
+    {
+      "id": 3,
+      "title": "Headphones",
+      "colors": ["black", "white"],
+      "price": 300,
+      "stock": 10,
+      "images": ["assets/products/headphones.png"],
+      "onsale": "",
+      "supplier": "sup2"
+    },
+    {
+      "id": 4,
+      "title": "Laptop Lenovo Ideapad",
+      "colors": ["black"],
+      "price": 900,
+      "stock": 15,
+      "images": ["assets/products/lenovo.png"],
+      "onsale": "",
+      "supplier": "sup2"
+    },
+    {
+      "id": 5,
+      "title": "Ipad pro 12.9 256GB",
+      "colors": ["black", "white", "space-gray"],
+      "price": 500,
+      "stock": 12,
+      "images": ["assets/products/ipad-pro.png"],
+      "onsale": "",
+      "supplier": "sup2"
+    },
+    {
+      "id": 6,
+      "title": "Apple Pencil 2da Generación",
+      "colors": ["white"],
+      "price": 250,
+      "stock": 15,
+      "images": ["assets/products/apple-pencil.png"],
+      "onsale": "30% off",
+      "supplier": "sup2"
+    }
+  ]
+}
