@@ -30,10 +30,6 @@ function deleteCard(id) {
   const cart = JSON.parse(localStorage.getItem("cart"));
   const indexFound = cart.findIndex((product) => product.id == id);
   cart.splice(indexFound, 1);
-  // if (cart.length == 0) {
-  //   let selector = document.getElementById("cartProductsContainer");
-  //   selector.innerHTML = `No hay productos`;
-  // }
   localStorage.setItem("cart", JSON.stringify(cart));
   if (!cart || cart.length == 0) {
     createTotalCard(0);
