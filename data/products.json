@@ -12,7 +12,8 @@
         "assets/mock2.jpg"
       ],
       "onsale": "50% off",
-      "supplier": "sup1"
+      "supplier": "sup1",
+      "description": "Su procesador Apple M2 Pro de 10 núcleos, te permitirá ejecutar programas variados y procesos indispensables para desenvolverte en el día a día, ya sea en tu trabajo o en los momentos de ocio en tu hogar."
     },
     {
       "id": 2,
@@ -22,7 +23,8 @@
       "stock": 15,
       "images": ["assets/products/microphone.png"],
       "onsale": "30% off",
-      "supplier": "sup2"
+      "supplier": "sup2",
+      "description": "Excelente micrófono con batería integrada."
     },
     {
       "id": 3,

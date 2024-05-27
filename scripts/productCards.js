@@ -22,7 +22,13 @@ function createCard(product) {
 }
 
 function printCards(arrayOfProducts, idSelector) {
+  if (!Array.isArray(arrayOfProducts)) {
+    console.warn("Expected an array but got:", arrayOfProducts);
+    return false;
+  }
+
   let productsTemplate = "";
+  console.log(arrayOfProducts);
   arrayOfProducts.sort((a, b) => {
     if (a.title < b.title) return -1;
     if (a.title > b.title) return 1;
@@ -35,4 +41,15 @@ function printCards(arrayOfProducts, idSelector) {
   productsSelector.innerHTML = productsTemplate;
 }
 
-printCards(products, "products");
+fetchProducts()
+  .then((data) => {
+    if (data && Array.isArray(data.products)) {
+      let products = data.products;
+      printCards(products, "products");
+    } else {
+      console.log("Data is not in the expected format:", data);
+    }
+  })
+  .catch((err) => {
+    console.log("Error:", err);
+  });
