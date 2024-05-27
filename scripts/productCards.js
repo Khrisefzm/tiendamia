@@ -8,7 +8,7 @@ function createCard(product) {
       />
       <div class="product-info">
         <span class="product-title">${product.title}</span>
-        <span class="product-description">${product.variable}</span>
+        <span class="product-description">${product.colors[0]}</span>
         <div class="product-price-block">
           <span class="price">${product.price}</span>
           <span class="discount">${product.onsale}</span>
@@ -23,6 +23,12 @@ function createCard(product) {
 
 function printCards(arrayOfProducts, idSelector) {
   let productsTemplate = "";
+  arrayOfProducts.sort((a, b) => {
+    if (a.title < b.title) return -1;
+    if (a.title > b.title) return 1;
+    return 0;
+  });
+  console.log(arrayOfProducts);
   for (const element of arrayOfProducts) {
     productsTemplate = productsTemplate + createCard(element);
   }
