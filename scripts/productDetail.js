@@ -1,3 +1,5 @@
+import products from "../data/products.js";
+
 const query = location.search;
 const params = new URLSearchParams(query);
 const id = params.get("id");
@@ -16,71 +18,65 @@ function changeMini(event) {
 }
 
 function saveProduct(id) {
-  fetchProducts().then((data) => {
-    const productSelected = data.products.find((product) => product.id == id);
-    if (!localStorage.getItem("cart")) {
-      localStorage.setItem("cart", JSON.stringify([]));
-    }
-    let cart = JSON.parse(localStorage.getItem("cart"));
-    const { title, price, images } = productSelected;
-    let color = document.querySelector("#colorSelected").value;
-    let quantity = parseInt(document.querySelector("#quantitySelected").value);
-    const product = {
-      id,
-      title,
-      price,
-      image: images[0],
-      color,
-      quantity,
-    };
-    const indexFound = cart.findIndex((product) => product.id == id);
-    if (indexFound >= 0) {
-      let cartQuantity = cart[indexFound].quantity + product.quantity;
-      cart[indexFound].quantity = cartQuantity;
-    } else {
-      cart.push(product);
-    }
-    localStorage.setItem("cart", JSON.stringify(cart));
-    printHeader();
-  });
+  const productSelected = products.find((product) => product.id == id);
+  if (!localStorage.getItem("cart")) {
+    localStorage.setItem("cart", JSON.stringify([]));
+  }
+  let cart = JSON.parse(localStorage.getItem("cart"));
+  const { title, price, images } = productSelected;
+  let color = document.querySelector("#colorSelected").value;
+  let quantity = parseInt(document.querySelector("#quantitySelected").value);
+  const product = {
+    id,
+    title,
+    price,
+    image: images[0],
+    color,
+    quantity,
+  };
+  const indexFound = cart.findIndex((product) => product.id == id);
+  if (indexFound >= 0) {
+    let cartQuantity = cart[indexFound].quantity + product.quantity;
+    cart[indexFound].quantity = cartQuantity;
+  } else {
+    cart.push(product);
+  }
+  localStorage.setItem("cart", JSON.stringify(cart));
+  printHeader();
 }
 
-function addfavorite(id, productSelected) {
-  fetchProducts().then((data) => {
-    const productSelected = data.products.find((product) => product.id == id);
-    if (!localStorage.getItem("favorites")) {
-      localStorage.setItem("favorites", JSON.stringify([]));
-    }
-    let favorites = JSON.parse(localStorage.getItem("favorites"));
-    let color = document.querySelector("#colorSelected").value;
-    const { title, price, images } = productSelected;
-    const product = {
-      id,
-      title,
-      price,
-      image: images[0],
-      color,
-    };
-    const indexFound = favorites.findIndex((product) => product.id == id);
-    if (indexFound >= 0) {
-      favoriteIcon.icon =
-        '<i class="fa-regular fa-heart" style="color: #000000;"></i>';
-      favorites.splice(indexFound, 1);
-    } else {
-      favoriteIcon.icon =
-        '<i class="fa-solid fa-heart" style="color: #fb0404;"></i>';
-      favorites.push(product);
-    }
+function addfavorite(id) {
+  const productSelected = products.find((product) => product.id == id);
+  if (!localStorage.getItem("favorites")) {
+    localStorage.setItem("favorites", JSON.stringify([]));
+  }
+  let favorites = JSON.parse(localStorage.getItem("favorites"));
+  let color = document.querySelector("#colorSelected").value;
+  const { title, price, images } = productSelected;
+  const product = {
+    id,
+    title,
+    price,
+    image: images[0],
+    color,
+  };
+  const indexFound = favorites.findIndex((product) => product.id == id);
+  if (indexFound >= 0) {
+    favoriteIcon.icon =
+      '<i class="fa-regular fa-heart" style="color: #000000;"></i>';
+    favorites.splice(indexFound, 1);
+  } else {
+    favoriteIcon.icon =
+      '<i class="fa-solid fa-heart" style="color: #fb0404;"></i>';
+    favorites.push(product);
+  }
 
-    localStorage.setItem("favorites", JSON.stringify(favorites));
+  localStorage.setItem("favorites", JSON.stringify(favorites));
 
-    printDetails(id, data.products);
-  });
+  printDetails(id, products);
 }
 
 function printDetails(id, arrayOfProducts) {
-  id = parseInt(id);
-
   if (!Array.isArray(arrayOfProducts)) {
     console.warn("Expected an array but got:", arrayOfProducts);
     return false;
@@ -88,7 +84,7 @@ function printDetails(id, arrayOfProducts) {
 
   const product = arrayOfProducts.find((product) => product.id === id);
   const { title, price, description, images, colors } = product;
-  console.log(product);
+
   const detailsTemplate = `
   <div class="columns-container">
     <div class="product-images-block">
@@ -117,10 +113,7 @@ function printDetails(id, arrayOfProducts) {
       <div class="description">
         <p>Descripción:</p>
         <p>
-          Su procesador Apple M2 Pro de 10 núcleos, te permitirá ejecutar
-          programas variados y procesos indispensables para desenvolverte
-          en el día a día, ya sea en tu trabajo o en los momentos de ocio
-          en tu hogar.
+          ${description}
         </p>
       </div>
     </div>
@@ -155,14 +148,14 @@ function printDetails(id, arrayOfProducts) {
           <div class="top">
             <input id="quantitySelected" type="number" value="1"/>
             <a href="./cart.html" class="btn-primary">
-              <button class="btn-primary" onclick=saveProduct(${id})>Comprar</button>
+              <button class="btn-primary" id="buy-btn">Comprar</button>
             </a>
-            <button class="btn-favorite" onclick=addfavorite(${id})>
+            <button class="btn-favorite" id="btn-favorite">
               ${favoriteIcon.icon}
             </button>
           </div>
           <div class="bottom">
-            <button class="btn-outline" onclick=saveProduct(${id})>Añadir al Carrito</button>
+            <button class="btn-outline" id="add-cart-btn">Añadir al Carrito</button>
           </div>
         </div>
       </div>
@@ -234,9 +227,15 @@ function printDetails(id, arrayOfProducts) {
   `;
   const detailsSelector = document.querySelector("#details");
   detailsSelector.innerHTML = detailsTemplate;
+
+  const btnFavorite = document.getElementById("btn-favorite");
+  btnFavorite.addEventListener("click", () => addfavorite(id));
+
+  const buyBtn = document.getElementById("buy-btn");
+  buyBtn.addEventListener("click", () => saveProduct(id));
+
+  const addCartBtn = document.getElementById("add-cart-btn");
+  addCartBtn.addEventListener("click", () => saveProduct(id));
 }
 
-fetchProducts().then((data) => {
-  let products = data.products;
-  printDetails(id, products);
-});
+printDetails(id, products);
