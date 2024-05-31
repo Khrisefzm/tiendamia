@@ -1,4 +1,4 @@
-const cart = JSON.parse(localStorage.getItem("cart"));
+const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 function totalPayment(array) {
   let total = 0;

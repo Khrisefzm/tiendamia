@@ -18,7 +18,7 @@ function deleteCard(id) {
 }
 
 function createFavoritesCard(product) {
-  const { id, title, price, image, color, quantity } = product;
+  const { id, title, price, image, color } = product;
   return `
   <div class="product-card">
     <a href="./details.html?id=${product.id}">
