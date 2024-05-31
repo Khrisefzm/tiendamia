@@ -7,7 +7,7 @@ class Product {
     stock,
     images,
     colors,
-    onsale,
+    onSale,
     discount
   ) {
     this.id = id;
@@ -17,7 +17,7 @@ class Product {
     this.stock = stock;
     this.images = images;
     this.colors = colors;
-    this.onsale = onsale;
+    this.onSale = onSale;
     this.discount = discount;
   }
 }
