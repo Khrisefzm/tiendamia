@@ -1,3 +1,5 @@
+import products from "../data/products.js";
+
 function createCard(product) {
   return `<article class="product-card">
     <a class="product-card" href="./details.html?id=${product.id}">
@@ -11,7 +13,7 @@ function createCard(product) {
         <span class="product-description">${product.colors[0]}</span>
         <div class="product-price-block">
           <span class="price">${product.price}</span>
-          <span class="discount">${product.onsale}</span>
+          <span class="discount">${product.discount}% off</span>
         </div>
         <div class="product-tax-policy">
           Incluye impuesto País y percepción AFIP
@@ -41,15 +43,4 @@ function printCards(arrayOfProducts, idSelector) {
   productsSelector.innerHTML = productsTemplate;
 }
 
-fetchProducts()
-  .then((data) => {
-    if (data && Array.isArray(data.products)) {
-      let products = data.products;
-      printCards(products, "products");
-    } else {
-      console.log("Data is not in the expected format:", data);
-    }
-  })
-  .catch((err) => {
-    console.log("Error:", err);
-  });
+printCards(products, "products");
