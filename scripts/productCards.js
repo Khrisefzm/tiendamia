@@ -13,7 +13,11 @@ function createCard(product) {
         <span class="product-description">${product.colors[0]}</span>
         <div class="product-price-block">
           <span class="price">${product.price}</span>
-          <span class="discount">${product.discount}% off</span>
+          ${
+            product.onSale == true
+              ? `<span class="discount">${product.discount}% off</span>`
+              : ``
+          }
         </div>
         <div class="product-tax-policy">
           Incluye impuesto País y percepción AFIP
@@ -30,7 +34,6 @@ function printCards(arrayOfProducts, idSelector) {
   }
 
   let productsTemplate = "";
-  console.log(arrayOfProducts);
   arrayOfProducts.sort((a, b) => {
     if (a.title < b.title) return -1;
     if (a.title > b.title) return 1;
